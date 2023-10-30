@@ -1,0 +1,56 @@
+* {
+    font-family: 'Courier New', Courier, monospace;
+}
+
+#menu {
+    text-align: center;
+}
+
+#code {
+    display: flex;
+}
+
+#code div {
+    width: 200px;
+    text-align: center;
+}
+
+th,
+tr,
+td {
+    padding: 0;
+}
+
+#triangle {
+    background-color: #012c45;
+    border-radius: 5px;
+    padding: 0 5px;
+    color: yellow;
+}
+
+#circle {
+    background-color: #012c45;
+    border-radius: 5px;
+    padding: 0 5px;
+    color: lightblue;
+}
+
+#square {
+    background-color: #012c45;
+    border-radius: 5px;
+    padding: 0 5px;
+    color: plum;
+}
+
+.crossable {
+    margin: 5px 0;
+}
+
+.options {
+    display: inline;
+    cursor: pointer;
+    user-select: none;
+    margin: 10px;
+    padding: 0 5px;
+    border-radius: 5px
+}
