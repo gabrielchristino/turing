@@ -37,6 +37,14 @@ function generate_dom(pat) {
 		if ($("#showAll:checked").get(0) != undefined)
 			row = row + "<td><canvas id='cards_code_" + s + "' width='200' height='220'/></td>";
 	}
+	var btnMenu = '<div id="buttonDiv"><spam id="buttonMenu">≡</spam></div>'
+	cde.innerHTML = cde.innerHTML + btnMenu;
+
+
+	$("#buttonMenu").click(function () {
+		openModal();
+	});
+
 	if ($("#showAll:checked").get(0) != undefined)
 		row = row + "<td><canvas id='cards_code_all' width='200' height='220'/></td><td id='note'></td></tr>";
 
@@ -60,7 +68,7 @@ function generate_dom(pat) {
 
 		var verifiers = "";
 		for (var v = 0; v < level[i].parent.length; v++) {
-			verifiers = verifiers + "<div class='crossable' style='cursor: pointer;user-select: none;'>" + level[i].parent[v].fullname + "</div>";
+			verifiers = verifiers + "<div class='crossable rules' style='cursor: pointer;user-select: none;'>" + level[i].parent[v].fullname + "</div>";
 		}
 
 		row = row + "<td>" + verifiers + "</td>";
@@ -90,13 +98,33 @@ function generate_dom(pat) {
 	$("#note").append(str);
 
 
-	$(".crossable").click(function (e) {
+	$(".options").click(function (e) {
 		var current = $(e.currentTarget).css("background-color");
 
 		if (current.includes("rgb(0, 0, 0)")) {
+			$(e.currentTarget).css("text-decoration", 'none');
 			$(e.currentTarget).css("background-color", 'white');
 			$(e.currentTarget).css("color", 'black');
+		} else {
+			$(e.currentTarget).css("background-color", 'black');
+			$(e.currentTarget).css("color", 'white');
+			$(e.currentTarget).css("border-radius", '5px');
+			$(e.currentTarget).css("text-decoration", 'line-through');
+		}
+	});
+
+
+	$(".rules").click(function (e) {
+		var current = $(e.currentTarget).css("background-color");
+
+		if (current.includes("rgb(0, 0, 0)")) {
 			$(e.currentTarget).css("text-decoration", 'none');
+			$(e.currentTarget).css("border-radius", '5px');
+			$(e.currentTarget).css("padding", '5px');
+			$(e.currentTarget).css("background-color", '#012c45');
+			$(e.currentTarget).css("color", 'orange');
+			$(e.currentTarget).css("font-weight", 'bold');
+			$(e.currentTarget).css("font-size", '20px');
 		} else {
 			$(e.currentTarget).css("background-color", 'black');
 			$(e.currentTarget).css("color", 'white');
@@ -681,12 +709,12 @@ function create_all_criteria(pat) {
 		}
 	
 	
-		// ODD / EVEN
+		// Ímpar / Par
 		for(var s1 = 0; s1 < pat.slots; s1++) {
-			var n = String.fromCharCode(a+s1) + " Odd | Even";
+			var n = String.fromCharCode(a+s1) + " Ímpar | Par";
 			tmp = [];
-			tmp.push(criteria_generate(pat, n, String.fromCharCode(a+s1) + " Odd", function(p) { return p.n[s1] % 2 == 1; }));
-			tmp.push(criteria_generate(pat, n, String.fromCharCode(a+s1) + " Even", function(p) { return p.n[s1] % 2 == 0; }));
+			tmp.push(criteria_generate(pat, n, String.fromCharCode(a+s1) + " Ímpar", function(p) { return p.n[s1] % 2 == 1; }));
+			tmp.push(criteria_generate(pat, n, String.fromCharCode(a+s1) + " Par", function(p) { return p.n[s1] % 2 == 0; }));
 			cr.push({name: n, cards: tmp});
 		}
 	
@@ -723,48 +751,48 @@ function create_all_criteria(pat) {
 
 	//5, 6, 7
 	tmp = [];
-	n = '▲ Even | Odd';
-	tmp.push(criteria_generate(pat, n, ctriangle + ' Even', function (p) { return p.n[0] % 2 == 0; }, tmp));
-	tmp.push(criteria_generate(pat, n, ctriangle + ' Odd', function (p) { return p.n[0] % 2 == 1; }, tmp));
+	n = '▲ Par | Ímpar';
+	tmp.push(criteria_generate(pat, n, ctriangle + ' Par', function (p) { return p.n[0] % 2 == 0; }, tmp));
+	tmp.push(criteria_generate(pat, n, ctriangle + ' Ímpar', function (p) { return p.n[0] % 2 == 1; }, tmp));
 	cr.push({ name: n, cards: tmp, difficulty: 0 });
 
 	tmp = [];
-	n = '● Even | Odd';
-	tmp.push(criteria_generate(pat, n, ccircle + ' Even', function (p) { return p.n[1] % 2 == 0; }, tmp));
-	tmp.push(criteria_generate(pat, n, ccircle + ' Odd', function (p) { return p.n[1] % 2 == 1; }, tmp));
+	n = '● Par | Ímpar';
+	tmp.push(criteria_generate(pat, n, ccircle + ' Par', function (p) { return p.n[1] % 2 == 0; }, tmp));
+	tmp.push(criteria_generate(pat, n, ccircle + ' Ímpar', function (p) { return p.n[1] % 2 == 1; }, tmp));
 	cr.push({ name: n, cards: tmp, difficulty: 0 });
 
 	tmp = [];
-	n = '■ Even | Odd';
-	tmp.push(criteria_generate(pat, n, csquare + ' Even', function (p) { return p.n[2] % 2 == 0; }, tmp));
-	tmp.push(criteria_generate(pat, n, csquare + ' Odd', function (p) { return p.n[2] % 2 == 1; }, tmp));
+	n = '■ Par | Ímpar';
+	tmp.push(criteria_generate(pat, n, csquare + ' Par', function (p) { return p.n[2] % 2 == 0; }, tmp));
+	tmp.push(criteria_generate(pat, n, csquare + ' Ímpar', function (p) { return p.n[2] % 2 == 1; }, tmp));
 	cr.push({ name: n, cards: tmp, difficulty: 0 });
 
 	//8, 9, 10
 	tmp = [];
 	n = '(0 1 2 3)x 1';
-	tmp.push(criteria_generate(pat, n, '0x 1', function (p) { var c = 0; for (var i = 0; i < p.n.length; i++) if (p.n[i] == 1) c = c + 1; return c == 0; }, tmp));
-	tmp.push(criteria_generate(pat, n, '1x 1', function (p) { var c = 0; for (var i = 0; i < p.n.length; i++) if (p.n[i] == 1) c = c + 1; return c == 1; }, tmp));
-	tmp.push(criteria_generate(pat, n, '2x 1', function (p) { var c = 0; for (var i = 0; i < p.n.length; i++) if (p.n[i] == 1) c = c + 1; return c == 2; }, tmp));
-	tmp.push(criteria_generate(pat, n, '3x 1', function (p) { var c = 0; for (var i = 0; i < p.n.length; i++) if (p.n[i] == 1) c = c + 1; return c == 3; }, tmp));
+	tmp.push(criteria_generate(pat, n, '0x #1', function (p) { var c = 0; for (var i = 0; i < p.n.length; i++) if (p.n[i] == 1) c = c + 1; return c == 0; }, tmp));
+	tmp.push(criteria_generate(pat, n, '1x #1', function (p) { var c = 0; for (var i = 0; i < p.n.length; i++) if (p.n[i] == 1) c = c + 1; return c == 1; }, tmp));
+	tmp.push(criteria_generate(pat, n, '2x #1', function (p) { var c = 0; for (var i = 0; i < p.n.length; i++) if (p.n[i] == 1) c = c + 1; return c == 2; }, tmp));
+	tmp.push(criteria_generate(pat, n, '3x #1', function (p) { var c = 0; for (var i = 0; i < p.n.length; i++) if (p.n[i] == 1) c = c + 1; return c == 3; }, tmp));
 	cr.push({ name: n, cards: tmp, difficulty: 0 });
 
 
 	tmp = [];
 	n = '(0 1 2 3)x 3';
-	tmp.push(criteria_generate(pat, n, '0x 3', function (p) { var c = 0; for (var i = 0; i < p.n.length; i++) if (p.n[i] == 3) c = c + 1; return c == 0; }, tmp));
-	tmp.push(criteria_generate(pat, n, '1x 3', function (p) { var c = 0; for (var i = 0; i < p.n.length; i++) if (p.n[i] == 3) c = c + 1; return c == 1; }, tmp));
-	tmp.push(criteria_generate(pat, n, '2x 3', function (p) { var c = 0; for (var i = 0; i < p.n.length; i++) if (p.n[i] == 3) c = c + 1; return c == 2; }, tmp));
-	tmp.push(criteria_generate(pat, n, '3x 3', function (p) { var c = 0; for (var i = 0; i < p.n.length; i++) if (p.n[i] == 3) c = c + 1; return c == 3; }, tmp));
+	tmp.push(criteria_generate(pat, n, '0x #3', function (p) { var c = 0; for (var i = 0; i < p.n.length; i++) if (p.n[i] == 3) c = c + 1; return c == 0; }, tmp));
+	tmp.push(criteria_generate(pat, n, '1x #3', function (p) { var c = 0; for (var i = 0; i < p.n.length; i++) if (p.n[i] == 3) c = c + 1; return c == 1; }, tmp));
+	tmp.push(criteria_generate(pat, n, '2x #3', function (p) { var c = 0; for (var i = 0; i < p.n.length; i++) if (p.n[i] == 3) c = c + 1; return c == 2; }, tmp));
+	tmp.push(criteria_generate(pat, n, '3x #3', function (p) { var c = 0; for (var i = 0; i < p.n.length; i++) if (p.n[i] == 3) c = c + 1; return c == 3; }, tmp));
 	cr.push({ name: n, cards: tmp, difficulty: 0 });
 
 
 	tmp = [];
 	n = '(0 1 2 3)x 4';
-	tmp.push(criteria_generate(pat, n, '0x 4', function (p) { var c = 0; for (var i = 0; i < p.n.length; i++) if (p.n[i] == 4) c = c + 1; return c == 0; }, tmp));
-	tmp.push(criteria_generate(pat, n, '1x 4', function (p) { var c = 0; for (var i = 0; i < p.n.length; i++) if (p.n[i] == 4) c = c + 1; return c == 1; }, tmp));
-	tmp.push(criteria_generate(pat, n, '2x 4', function (p) { var c = 0; for (var i = 0; i < p.n.length; i++) if (p.n[i] == 4) c = c + 1; return c == 2; }, tmp));
-	tmp.push(criteria_generate(pat, n, '3x 4', function (p) { var c = 0; for (var i = 0; i < p.n.length; i++) if (p.n[i] == 4) c = c + 1; return c == 3; }, tmp));
+	tmp.push(criteria_generate(pat, n, '0x #4', function (p) { var c = 0; for (var i = 0; i < p.n.length; i++) if (p.n[i] == 4) c = c + 1; return c == 0; }, tmp));
+	tmp.push(criteria_generate(pat, n, '1x #4', function (p) { var c = 0; for (var i = 0; i < p.n.length; i++) if (p.n[i] == 4) c = c + 1; return c == 1; }, tmp));
+	tmp.push(criteria_generate(pat, n, '2x #4', function (p) { var c = 0; for (var i = 0; i < p.n.length; i++) if (p.n[i] == 4) c = c + 1; return c == 2; }, tmp));
+	tmp.push(criteria_generate(pat, n, '3x #4', function (p) { var c = 0; for (var i = 0; i < p.n.length; i++) if (p.n[i] == 4) c = c + 1; return c == 3; }, tmp));
 	cr.push({ name: n, cards: tmp, difficulty: 0 });
 
 
@@ -792,7 +820,7 @@ function create_all_criteria(pat) {
 
 	//14, 15
 	tmp = [];
-	n = '(▲ < ●■) | (● < ▲■) | (■ < ▲●)';
+	n = '(▲ < ▲●■) | (● < ▲■) | (■ < ▲●)';
 	tmp.push(criteria_generate(pat, n, ctriangle + ' < ' + ccircle + csquare, function (p) { return (p.n[0] < p.n[1]) && (p.n[0] < p.n[2]); }, tmp));
 	tmp.push(criteria_generate(pat, n, ccircle + ' < ' + ctriangle + csquare, function (p) { return (p.n[1] < p.n[0]) && (p.n[1] < p.n[2]); }, tmp));
 	tmp.push(criteria_generate(pat, n, csquare + ' < ' + ctriangle + ccircle, function (p) { return (p.n[2] < p.n[0]) && (p.n[2] < p.n[1]); }, tmp));
@@ -807,25 +835,25 @@ function create_all_criteria(pat) {
 
 	//16
 	tmp = [];
-	n = 'Even > | < Odd';
-	tmp.push(criteria_generate(pat, n, 'Even > Odd', function (p) { return (p.n[0] % 2) + (p.n[1] % 2) + (p.n[2] % 2) < 2; }, tmp));
-	tmp.push(criteria_generate(pat, n, 'Even < Odd', function (p) { return (p.n[0] % 2) + (p.n[1] % 2) + (p.n[2] % 2) >= 2; }, tmp));
+	n = 'Par > | < Ímpar';
+	tmp.push(criteria_generate(pat, n, 'Par > Ímpar', function (p) { return (p.n[0] % 2) + (p.n[1] % 2) + (p.n[2] % 2) < 2; }, tmp));
+	tmp.push(criteria_generate(pat, n, 'Par < Ímpar', function (p) { return (p.n[0] % 2) + (p.n[1] % 2) + (p.n[2] % 2) >= 2; }, tmp));
 	cr.push({ name: n, cards: tmp, difficulty: 0 });
 
 	//17
 	tmp = [];
-	n = '(0 1 2 3)x Even';
-	tmp.push(criteria_generate(pat, n, '0x Even', function (p) { var c = 0; for (var i = 0; i < p.n.length; i++) if (p.n[i] % 2 == 0) c = c + 1; return c == 0; }, tmp));
-	tmp.push(criteria_generate(pat, n, '1x Even', function (p) { var c = 0; for (var i = 0; i < p.n.length; i++) if (p.n[i] % 2 == 0) c = c + 1; return c == 1; }, tmp));
-	tmp.push(criteria_generate(pat, n, '2x Even', function (p) { var c = 0; for (var i = 0; i < p.n.length; i++) if (p.n[i] % 2 == 0) c = c + 1; return c == 2; }, tmp));
-	tmp.push(criteria_generate(pat, n, '3x Even', function (p) { var c = 0; for (var i = 0; i < p.n.length; i++) if (p.n[i] % 2 == 0) c = c + 1; return c == 3; }, tmp));
+	n = '(0 1 2 3)x Par';
+	tmp.push(criteria_generate(pat, n, '0x Par', function (p) { var c = 0; for (var i = 0; i < p.n.length; i++) if (p.n[i] % 2 == 0) c = c + 1; return c == 0; }, tmp));
+	tmp.push(criteria_generate(pat, n, '1x Par', function (p) { var c = 0; for (var i = 0; i < p.n.length; i++) if (p.n[i] % 2 == 0) c = c + 1; return c == 1; }, tmp));
+	tmp.push(criteria_generate(pat, n, '2x Par', function (p) { var c = 0; for (var i = 0; i < p.n.length; i++) if (p.n[i] % 2 == 0) c = c + 1; return c == 2; }, tmp));
+	tmp.push(criteria_generate(pat, n, '3x Par', function (p) { var c = 0; for (var i = 0; i < p.n.length; i++) if (p.n[i] % 2 == 0) c = c + 1; return c == 3; }, tmp));
 	cr.push({ name: n, cards: tmp, difficulty: 0 });
 
 	//18
 	tmp = [];
-	n = '(▲ + ● + ■) Even | Odd';
-	tmp.push(criteria_generate(pat, n, ctriangle + ' + ' + ccircle + ' + ' + csquare + ' Even', function (p) { return (p.n[0] + p.n[1] + p.n[2]) % 2 == 0; }, tmp));
-	tmp.push(criteria_generate(pat, n, ctriangle + ' + ' + ccircle + ' + ' + csquare + ' Odd', function (p) { return (p.n[0] + p.n[1] + p.n[2]) % 2 == 1; }, tmp));
+	n = '(▲ + ● + ■) Par | Ímpar';
+	tmp.push(criteria_generate(pat, n, ctriangle + ' + ' + ccircle + ' + ' + csquare + ' Par', function (p) { return (p.n[0] + p.n[1] + p.n[2]) % 2 == 0; }, tmp));
+	tmp.push(criteria_generate(pat, n, ctriangle + ' + ' + ccircle + ' + ' + csquare + ' Ímpar', function (p) { return (p.n[0] + p.n[1] + p.n[2]) % 2 == 1; }, tmp));
 	cr.push({ name: n, cards: tmp, difficulty: 0 });
 
 
@@ -943,13 +971,13 @@ function create_all_criteria(pat) {
 
 	//33
 	tmp = [];
-	n = '(▲ | ● | ■)  Even | Odd';
-	tmp.push(criteria_generate(pat, n, ctriangle + ' Even', function (p) { return p.n[0] % 2 == 0; }, tmp));
-	tmp.push(criteria_generate(pat, n, ctriangle + ' Odd', function (p) { return p.n[0] % 2 == 1; }, tmp));
-	tmp.push(criteria_generate(pat, n, ccircle + ' Even', function (p) { return p.n[1] % 2 == 0; }, tmp));
-	tmp.push(criteria_generate(pat, n, ccircle + ' Odd', function (p) { return p.n[1] % 2 == 1; }, tmp));
-	tmp.push(criteria_generate(pat, n, csquare + ' Even', function (p) { return p.n[2] % 2 == 0; }, tmp));
-	tmp.push(criteria_generate(pat, n, csquare + ' Odd', function (p) { return p.n[2] % 2 == 1; }, tmp));
+	n = '(▲ | ● | ■)  Par | Ímpar';
+	tmp.push(criteria_generate(pat, n, ctriangle + ' Par', function (p) { return p.n[0] % 2 == 0; }, tmp));
+	tmp.push(criteria_generate(pat, n, ctriangle + ' Ímpar', function (p) { return p.n[0] % 2 == 1; }, tmp));
+	tmp.push(criteria_generate(pat, n, ccircle + ' Par', function (p) { return p.n[1] % 2 == 0; }, tmp));
+	tmp.push(criteria_generate(pat, n, ccircle + ' Ímpar', function (p) { return p.n[1] % 2 == 1; }, tmp));
+	tmp.push(criteria_generate(pat, n, csquare + ' Par', function (p) { return p.n[2] % 2 == 0; }, tmp));
+	tmp.push(criteria_generate(pat, n, csquare + ' Ímpar', function (p) { return p.n[2] % 2 == 1; }, tmp));
 	cr.push({ name: n, cards: tmp, difficulty: 2 });
 
 
@@ -1175,6 +1203,11 @@ function show_solution(argument) {
 
 }
 
+function openModal() {
+	const dialog = document.querySelector("dialog");
+	dialog.showModal();
+}
+
 $(document).ready(function () {
 
 
@@ -1190,6 +1223,7 @@ $(document).ready(function () {
 		show_solution();
 	});
 
+	openModal();
 
 });
 

@@ -7,35 +7,45 @@
 		<script src="js/main.js"></script>
 	</head>
 	<body>
-
-		<div id="menu">
-			<label>Difficulty</label>
-			<select id="difficulty">
-				<option selected value="0">Easy</option>
-				<option value="1">Medium</option>
-				<option value="2">Hard</option>
-			</select>
-
-			<label>Verifiers</label>
-			<select id="verifiers">
-				<option>3</option>
-				<option selected >4</option>
-				<option>5</option>
-				<option>6</option>
-				<option>7</option>
-			</select>
-			<button id="newgame">New game</button>
-			<button id="solution">Solution</button>
-			<!--<input id="cheat" type="checkbox">Cheat</input>-->
-			<input id="showAll" type="checkbox">Show all interface</input>
-			<br>
-			<br>
-		</div>
-
-		<div id="code"></div>
+		  <main>
+			<div id="code"></div>
 
 		<table id="cards_code">
 		</table>
+		
 
+
+		<dialog id="dialog">
+			<div id="menu">
+				<label>Difficulty</label>
+				<select id="difficulty">
+					<option selected value="0">Easy</option>
+					<option value="1">Medium</option>
+					<option value="2">Hard</option>
+				</select>
+	
+				<label>Verifiers</label>
+				<select id="verifiers">
+					<option>3</option>
+					<option selected >4</option>
+					<option>5</option>
+					<option>6</option>
+					<option>7</option>
+				</select>
+				<!--<input id="cheat" type="checkbox">Cheat</input>-->
+			</div>
+
+			<br>
+
+			<input id="showAll" type="checkbox">Show all interface</input>
+
+			<br><br>
+
+			<form method="dialog">
+				<button id="newgame">New game</button>
+				<button id="solution">Solution</button>
+			</form>
+		  </dialog>
+		  </main>
 	</body>
 </html>

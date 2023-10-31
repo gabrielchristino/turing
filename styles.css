@@ -2,12 +2,32 @@
     font-family: 'Courier New', Courier, monospace;
 }
 
+html, body {
+    overflow: auto;
+}
+
+body, main {
+    width: 100vw;
+    height: 100vh;
+}
+
+body {
+    padding: 5px 0 0;
+    margin: 0;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+}
+
 #menu {
     text-align: center;
 }
 
 #code {
     display: flex;
+    justify-content: center;
 }
 
 #code div {
@@ -15,35 +35,69 @@
     text-align: center;
 }
 
+select {
+    background-color: #012c45;
+    color: orange;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+}
+
 th,
 tr,
 td {
     padding: 0;
+    text-align: center;
+}
+
+#buttonDiv {
+    text-align: right !important;
+}
+
+#buttonMenu, button {
+    background-color: #012c45;
+    border-radius: 5px;
+    padding: 5px;
+    color: orange;
+}
+
+#buttonMenu {
+    padding: 0 5px !important;
+    font-size: 20px;
 }
 
 #triangle {
     background-color: #012c45;
     border-radius: 5px;
     padding: 0 5px;
-    color: yellow;
+    color: lightblue;
 }
 
 #circle {
     background-color: #012c45;
     border-radius: 5px;
     padding: 0 5px;
-    color: lightblue;
+    color: plum;
 }
 
 #square {
     background-color: #012c45;
     border-radius: 5px;
     padding: 0 5px;
-    color: plum;
+    color: yellow;
 }
 
 .crossable {
     margin: 5px 0;
+}
+
+.rules {
+    border-radius: 5px;
+    padding: 5px;
+    background-color: #012c45;
+    color: orange;
+    font-weight: bold;
+    font-size: 20px;
 }
 
 .options {
@@ -53,4 +107,9 @@ td {
     margin: 10px;
     padding: 0 5px;
     border-radius: 5px
+}
+
+dialog {
+    text-align: center;
+    align-self: safe center;
 }
