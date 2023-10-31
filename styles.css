@@ -1,5 +1,6 @@
 * {
     font-family: 'Courier New', Courier, monospace;
+    font-size: 20px;
 }
 
 html, body {
@@ -28,7 +29,6 @@ main {
 #code {
     display: flex;
     justify-content: center;
-    font-size: 20px;
 }
 
 .card {
@@ -46,7 +46,6 @@ select {
     border: none;
     border-radius: 5px;
     padding: 5px 10px;
-    font-size: 20px;
 }
 
 th,
@@ -69,7 +68,6 @@ td {
 
 #buttonMenu {
     padding: 0 5px !important;
-    font-size: 20px;
 }
 
 #triangle {
@@ -103,7 +101,6 @@ td {
     background-color: #012c45;
     color: orange;
     font-weight: bold;
-    font-size: 20px;
 }
 
 .options {

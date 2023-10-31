@@ -124,7 +124,6 @@ function generate_dom(pat) {
 			$(e.currentTarget).css("background-color", '#012c45');
 			$(e.currentTarget).css("color", 'orange');
 			$(e.currentTarget).css("font-weight", 'bold');
-			$(e.currentTarget).css("font-size", '20px');
 		} else {
 			$(e.currentTarget).css("background-color", 'black');
 			$(e.currentTarget).css("color", 'white');
